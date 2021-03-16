@@ -1,1 +1,1 @@
-# SimpleProjects
+# SimpleProjects in terminal

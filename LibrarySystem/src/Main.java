@@ -17,6 +17,7 @@ public class Main {
         Book book = new Book("Tale", 300, 10.50, "DoraGabe");
         library.addBook(book);
 
+        System.out.println("Enter book in the format: Title, pages, price, Author");
         String input = scanner.nextLine();
         while (!input.equals("stop")){
             String[] bookDetails = input.split(", ");
@@ -32,13 +33,14 @@ public class Main {
             input = scanner.nextLine();
         }
 
+        System.out.println("Enter command");
         String command = scanner.nextLine();
         while (!command.equals("close library")){
             String[] commandData = command.split(", ");
             String action = commandData[0];
 
             switch (action){
-                case "Show":
+                case "Show customers with rented books":
                     library.getCustomers().stream()
                             .filter(customer -> customer.getBooks().size() > 0)
                             .forEach(customer -> {
@@ -47,7 +49,7 @@ public class Main {
                                         .forEach(book1 -> System.out.println("-- " + book1.getName()));
                             });
                     break;
-                case "Buy":
+                case "Buy book":
                     String bookToBuy = commandData[1];
                     String customerToBuy = commandData[2];
 
@@ -68,18 +70,18 @@ public class Main {
                         Book book1 = (Book) library.getBook(bookToBuy);
                         Discount discount = new Discount(book1.getPrice(), costumer.getBooksIssued());
                         Invoice invoice = new Invoice(library, costumer, discount, book1);
-                        invoice.getSoldInvoice(costumer,library, book1, discount);
+                        invoice.getSoldInvoice();
                         library.updateCostumer(costumer);
                     }
                     break;
-                case "Rent":
+                case "Rent book":
                     String bookToRent = commandData[1];
                     String customerToRent = commandData[2];
 
                     if (isSuchBook(bookToRent, library.getAvailableBooks())){
                         if (!isSuchCostumer(customerToRent, library)){
                             System.out.println("No such costumer!");
-                            System.out.println("Enter costumer details!");
+                            System.out.println("Enter costumer details in the following format: age, balance");
                             String[] costumerDetails = scanner.nextLine().split(", ");
                             int age = Integer.parseInt(costumerDetails[0]);
                             double balance = Double.parseDouble(costumerDetails[1]);
@@ -94,12 +96,46 @@ public class Main {
                         Discount discount = new Discount(book1.getPrice(), costumer.getBooksIssued());
                         Invoice invoice = new Invoice(library, costumer, discount, book1);
                         invoice.getRentInvoice();
-                        library.updateCostumer(costumer);
                     }
                     break;
-                case "Return":
-
+                case "Return book":
+                    String bookToReturn = commandData[1];
+                    String customerToReturn = commandData[2];
+                    Customer customer = (Customer) library.getCostumer(customerToReturn);
+                    if (isSuchBook(bookToReturn, library.getUnavailableBooks().getRentedBooks()) && isSuchCostumer(customerToReturn, library)){
+                        if (customer.isSuchBook(bookToReturn)){
+                            Book book1 = (Book) customer.getBook(bookToReturn);
+                            customer.returnBook(book1, library);
+                            library.updateCostumer(customer);
+                        }
+                    }else {
+                        System.out.println("False book or customer");
+                    }
+                    break;
+                case "Library statistics":
+                    System.out.println("Library System");
+                    String inputCommand = scanner.nextLine();
+                    if (inputCommand.equals("List Available books")) {
+                        System.out.println("     -Available books:");
+                        library.getAvailableBooks().
+                                forEach(book1 -> System.out.println("       -" + book1.getName() + "-" + book1.getAuthor() + " " + book1.getPrice()));
+                    }else if (inputCommand.equals("List Unavailable books")) {
+                        System.out.println("     -Unavailable books:");
+                        library.getUnavailableBooks().getSoldBooks().
+                                forEach(book1 -> System.out.println("       -" + book1.getName() + "-" + book1.getAuthor() + " " + book1.getPrice()));
+                    }else if (inputCommand.equals("List customers")){
+                        System.out.println("    -Customers:");
+                        library.getCustomers()
+                                .forEach(customer1 -> System.out.println(customer1.toString()));
+                    }else if (inputCommand.equals("List Library Data")){
+                        System.out.println("     -Library Data:");
+                        System.out.printf("         Balance: %.2f, %n" +
+                                "       Available books: %d, %n" +
+                                "       Unavailable books: %d, %n", library.getAccount().getBalance(),
+                                library.getAvailableBooks().size(), library.getUnavailableBooks().getRentedBooks().size());
+                    }
             }
+            System.out.println("Enter command");
             command = scanner.nextLine();
         }
     }

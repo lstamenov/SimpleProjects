@@ -61,6 +61,24 @@ public class Customer {
         incrementBooksIssued();
     }
 
+    public boolean isSuchBook(String bookName){
+        for ( Book b : books) {
+            if (b.getName().equals(bookName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Object getBook(String bookName){
+        for (Book b : books) {
+            if (b.getName().equals(bookName)){
+                return b;
+            }
+        }
+        return "No such book is to return!";
+    }
+
     @Override
     public String toString() {
         return String.format("Name: %s%n" +

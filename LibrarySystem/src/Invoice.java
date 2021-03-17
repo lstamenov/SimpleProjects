@@ -17,17 +17,19 @@ public class Invoice {
             library.getAccount().setBalance(library.getAccount().getBalance() - (book.getPrice() - (book.getPrice()) - discount.getRentalDiscount()));
             library.rentBook(book);
             customer.rentBook(book);
+            library.updateCostumer(customer);
         }else {
             System.out.println("Not enough money!");
         }
     }
 
-    public void getSoldInvoice(Customer customer, Library library, Book book, Discount discount){
+    public void getSoldInvoice(){
         if (customer.getAccount().getBalance() >= book.getPrice()){
             customer.getAccount().setBalance(customer.getAccount().getBalance() - (book.getPrice() - (book.getPrice()) - discount.getDiscount()));
             library.getAccount().setBalance(library.getAccount().getBalance() + book.getPrice() - (book.getPrice()) - discount.getDiscount());
             library.sellBook(book);
             customer.buyBook(book);
+            library.updateCostumer(customer);
         }else {
             System.out.println("Not enough money!");
         }

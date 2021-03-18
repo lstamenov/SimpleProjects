@@ -6,7 +6,11 @@ public class ID {
     }
 
     public int getId() {
-        setId(id + 1);
+        increaseId();
         return id;
+    }
+
+    public void increaseId(){
+        setId(id + 1);
     }
 }

@@ -1,16 +1,14 @@
-import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Subject {
     String name;
     int id;
-    Teacher teacher;
-    LinkedHashMap<Student, Integer> grades;
+    List<Teacher> teachers;
 
-    public Subject(String name, int id, Teacher teacher, LinkedHashMap<Student, Integer> grades) {
+    public Subject(String name, int id, List<Teacher> teachers) {
         this.name = name;
         this.id = id;
-        this.teacher = teacher;
-        this.grades = grades;
+        this.teachers = teachers;
     }
 
     public String getName() {
@@ -21,21 +19,11 @@ public class Subject {
         return id;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public List<Teacher> getTeachers() {
+        return teachers;
     }
 
-    //method to change Teacher
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    //method to add student and its grade
-    public LinkedHashMap<Student, Integer> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(LinkedHashMap<Student, Integer> grades) {
-        this.grades = grades;
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
     }
 }

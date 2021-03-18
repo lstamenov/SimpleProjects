@@ -5,13 +5,15 @@ public class Faculty {
     private final int id;
     private List<Student> students;
     private List<Subject> subjects;
+    private List<Teacher> teachers;
     double tax;
 
-    public Faculty(String name, int id, List<Student> students, List<Subject> subjects, double tax) {
+    public Faculty(String name, int id, List<Student> students, List<Subject> subjects, List<Teacher> teachers,double tax) {
         this.name = name;
         this.id = id;
         this.students = students;
         this.subjects = subjects;
+        this.teachers = teachers;
         this.tax = tax;
     }
 
@@ -43,7 +45,29 @@ public class Faculty {
         this.subjects = subjects;
     }
 
+    public List<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
     public double getTax() {
         return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
+    public void listStudents(){
+        for (Student s : getStudents()) {
+            System.out.println(s.getInformation());
+        }
+    }
+
+    public void addSubject(Subject subject){
+        subjects.add(subject);
     }
 }

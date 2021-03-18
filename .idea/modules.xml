@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LibrarySystem/LibrarySystem.iml" filepath="$PROJECT_DIR$/LibrarySystem/LibrarySystem.iml" />
       <module fileurl="file://$PROJECT_DIR$/SimpleProjects.iml" filepath="$PROJECT_DIR$/SimpleProjects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UniversityManagementSystem/UniversityManagementSystem.iml" filepath="$PROJECT_DIR$/UniversityManagementSystem/UniversityManagementSystem.iml" />
     </modules>
   </component>
 </project>
